@@ -1,12 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const app = express();
 const port = 3000;
 
-const app = express();
+// Enable JSON parsing for request bodies
 app.use(bodyParser.json());
+// User signup route
+const userRouter = require("./routers/userRouter");
+app.use(`/api/users`, userRouter);
 
-app.use(`/api/users`);
-
+// Start the server
 app.listen(port, () => {
 	console.log(`Server is now running om  port ${port}...`);
 });

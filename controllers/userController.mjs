@@ -35,25 +35,25 @@ export default signup = (req, res) => {
 			if (results.length > 0) {
 				return res.status(409).json({ error: "This email is already taken!" });
 			}
-		}
-	);
 
-	// Create a new user
-	const newUser = new User(firstName, lastName, email, password);
-	connection.query(
-		"INSERT INTO users (firstName, lastName, email, password) VALUES (?,?,?,?)",
-		[newUser.firstName, newUser.lastName, newUser.email, newUser.password],
-		(err, results) => {
-			if (err) {
-				console.error(err);
-				return res.status(500).json({ error: "Internal server error" });
-			}
-			// Return success response
-			res.status(200).json({
-				firstName: newUser.firstName,
-				lastName: newUser.lastName,
-				email: newUser.lastName,
-			});
+			// Create a new user
+			const newUser = new User(firstName, lastName, email, password);
+			connection.query(
+				"INSERT INTO users (firstName, lastName, email, password) VALUES (?,?,?,?)",
+				[newUser.firstName, newUser.lastName, newUser.email, newUser.password],
+				(err, results) => {
+					if (err) {
+						console.error(err);
+						return res.status(500).json({ error: "Internal server error" });
+					}
+					// Return success response
+					res.status(200).json({
+						firstName: newUser.firstName,
+						lastName: newUser.lastName,
+						email: newUser.lastName,
+					});
+				}
+			);
 		}
 	);
 };

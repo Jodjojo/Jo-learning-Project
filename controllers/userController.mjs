@@ -1,4 +1,5 @@
 import User from "../models/userModel.mjs";
+import connection from "../dbConfig.mjs";
 
 // Array to store registered users (for demo purposes)
 const users = [];
@@ -22,15 +23,37 @@ export default signup = (req, res) => {
 	}
 
 	// Check for unique email
-	const existingUser = users.find((user) => user.email === email);
-	if (existingUser) {
-		return res.status(409).json({ error: "The email is already taken" });
-	}
+	connection.query(
+		"SELECT * FROM users WHERE email = ?",
+		[email],
+		(err, results) => {
+			if (err) {
+				console.error(err);
+				return res.status(500).json({ error: "Internal server error" });
+			}
+
+			if (results.length > 0) {
+				return res.status(409).json({ error: "This email is already taken!" });
+			}
+		}
+	);
 
 	// Create a new user
 	const newUser = new User(firstName, lastName, email, password);
-	users.push(newUser);
-
-	// Return success response
-	res.status(200).json({ firstName, lastName, email });
+	connection.query(
+		"INSERT INTO users (firstName, lastName, email, password) VALUES (?,?,?,?)",
+		[newUser.firstName, newUser.lastName, newUser.email, newUser.password],
+		(err, results) => {
+			if (err) {
+				console.error(err);
+				return res.status(500).json({ error: "Internal server error" });
+			}
+			// Return success response
+			res.status(200).json({
+				firstName: newUser.firstName,
+				lastName: newUser.lastName,
+				email: newUser.lastName,
+			});
+		}
+	);
 };

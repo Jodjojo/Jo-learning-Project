@@ -1,12 +1,11 @@
 {
-	"name": "api-repo-and-base-application",
+	"name": "ecommerce-api",
 	"version": "1.0.0",
-	"description": "to set up an PI repository and base application using node.js and express",
-	"main": "server.mjs",
+	"description": "Ecommerce API for fictional product",
+	"main": "server.js",
 	"type": "module",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.mjs"
+		"start": "node server.js"
 	},
 	"repository": {
 		"type": "git",

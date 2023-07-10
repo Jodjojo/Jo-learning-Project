@@ -7,7 +7,7 @@ const port = 3000;
 app.use(bodyParser.json());
 // User signup route
 
-import userRouter from "./routers/userRouter.mjs";
+import userRouter from "./routers/userRouter.js";
 app.use(`/api/users`, userRouter);
 
 // Start the server

@@ -1,24 +1,39 @@
-const User = require("../models/userModel");
+import { createUser } from "../models/userModel.js";
 
-const signUp = async (req, res, next) => {
+export const signup = async (req, res) => {
+	const { firstName, lastName, email, password } = req.body;
+
+	// Check for required fields
+	if (!firstName) {
+		return res.status(422).json({ error: "Please enter the firstName" });
+	}
+	if (!lastName) {
+		return res.status(422).json({ error: "Please enter the lastName" });
+	}
+	if (!email) {
+		return res.status(422).json({ error: "Please enter the email" });
+	}
+	if (!password) {
+		return res.status(422).json({ error: "Please enter the password" });
+	}
+
 	try {
-		const newUser = await User.create({
-			firstName: req.body.firstName,
-			lastName: req.body.lastName,
-			email: req.body.email,
-			password: req.body.password,
-		});
+		// Check for unique email
+		const existingUser = await pool.query(
+			"SELECT * FROM users WHERE email = $1",
+			[email]
+		);
+		if (existingUser.rows.length > 0) {
+			return res.status(409).json({ error: "The email is already taken" });
+		}
 
-		res.status(201).json({
-			status: "success",
-			data: {
-				user: newUser,
-			},
-		});
-	} catch (err) {
-		res.status(422).json({
-			status: "fail",
-			message: err,
-		});
+		// Create a new user
+		const newUser = await createUser(firstName, lastName, email, password);
+
+		// Return success response
+		res.status(200).json(newUser);
+	} catch (error) {
+		console.error("Error during user signup:", error);
+		res.status(500).json({ error: "An error occurred during user signup" });
 	}
 };

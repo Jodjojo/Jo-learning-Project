@@ -1,31 +1,14 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
+import pool from "../db.js";
 
-const userSchema = new mongoose.Schema({
-	firstName: {
-		type: String,
-		required: [true, "Please enter your Firstname"],
-	},
-	lastName: {
-		type: String,
-		required: [true, "Please enter your Lastname"],
-	},
-	email: {
-		type: String,
-		required: [true, "Please enter your email"],
-		unique: true,
-		lowercase: true,
-		validate: [validator.isEmail, "Please Provide a valid email"],
-	},
-	password: {
-		type: String,
-		required: [true, "Please enter your password"],
-		message: "Password must contain more than 8 characters",
-		minlength: [8, "password must have more or equal to 8 characters"],
-		select: false,
-	},
-});
+export const createUser = async (firstName, lastName, email, password) => {
+	const query =
+		"INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) RETURNING *";
+	const values = [firstName, lastName, email, password];
 
-const User = mongoose.model("User", userSchema);
-
-module.exports = User;
+	try {
+		const result = await pool.query(query, values);
+		return result.rows[0];
+	} catch (error) {
+		throw error;
+	}
+};

@@ -1,17 +1,24 @@
 {
-	"name": "jo-learning-project",
+	"name": "ecommerce-api",
 	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
+	"description": "Ecommerce API for fictional product",
+	"main": "server.js",
+	"type": "module",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"start": "node server.js"
 	},
-	"keywords": [],
-	"author": "",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Jodjojo/jo-learning-Project.git"
+	},
+	"author": "Yusuff Joseph",
 	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Jodjojo/jo-learning-Project/issues"
+	},
+	"homepage": "https://github.com/Jodjojo/jo-learning-Project#readme",
 	"dependencies": {
 		"body-parser": "^1.20.2",
-		"express": "^4.18.2",
-		"mongoose": "^7.3.1"
+		"express": "^4.18.2"
 	}
 }

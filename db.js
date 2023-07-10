@@ -1,11 +1,15 @@
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  first_name VARCHAR(255) NOT NULL,
-  last_name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL
-);
+import pg from "pg";
+const { Pool } = pg;
 
-INSERT INTO users(
-  
-)
+import dotenv from "dotenv";
+dotenv.config();
+
+const pool = new Pool({
+	user: process.env.DB_USER,
+	host: process.env.DB_HOST,
+	database: process.env.DB_DATABASE,
+	password: process.env.DB_PASSWORD,
+	port: process.env.DB_PORT,
+});
+
+export default pool;

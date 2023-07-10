@@ -1,4 +1,5 @@
 import mysql from "mysql2";
+
 import dotenv from "dotenv";
 
 dotenv.config(); // Load the environment variables from .env file

@@ -1,6 +1,7 @@
 import { createUser } from "../models/userModel.js";
+import pool from "../db.js";
 
-export const signup = async (req, res) => {
+const signup = async (req, res) => {
 	const { firstName, lastName, email, password } = req.body;
 
 	// Check for required fields
@@ -31,9 +32,11 @@ export const signup = async (req, res) => {
 		const newUser = await createUser(firstName, lastName, email, password);
 
 		// Return success response
-		res.status(200).json(newUser);
+		res.status(200).json({ firstName, lastName, email });
 	} catch (error) {
 		console.error("Error during user signup:", error);
 		res.status(500).json({ error: "An error occurred during user signup" });
 	}
 };
+
+export { signup };

@@ -2,7 +2,7 @@ import pool from "../db.js";
 
 export const createUser = async (firstName, lastName, email, password) => {
 	const query =
-		"INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) RETURNING *";
+		"INSERT INTO users (firstName, lastName, email, password) VALUES ($1, $2, $3, $4) RETURNING *";
 	const values = [firstName, lastName, email, password];
 
 	try {

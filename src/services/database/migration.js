@@ -1,18 +1,19 @@
 import { dbConnection } from "../../config/database.js";
+import logger from "../../utils/logger.js";
 
 /**
  * Put all SQL here and
  */
 const query = `
-    CREATE TABLE Users (
-        id INT PRIMARY KEY AUTO_INCREMENT,
+    CREATE TABLE IF NOT EXISTS Users (
+        id SERIAL PRIMARY KEY,
         firstname VARCHAR(40),
         lastname VARCHAR(40),
         email VARCHAR(50) UNIQUE NOT NULL,
         password VARCHAR(50) NOT NULL,
         isActive BOOLEAN DEFAULT false,
-        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        created_at TIMESTAMPTZ DEFAULT current_timestamp,
+        updated_at TIMESTAMPTZ DEFAULT current_timestamp
     );
 `;
 

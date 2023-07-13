@@ -1,6 +1,8 @@
-import { Pool } from 'pg';
-import logger from '../utils/logger';
-import { DEV_DATABASE_URL, DATABASE_URL, NODE_ENV } from './constants';
+import pg from 'pg';
+import logger from '../utils/logger.js';
+import { DEV_DATABASE_URL, DATABASE_URL, NODE_ENV } from './constants.js';
+
+const {Pool} = pg;
 
 const databaseConfig = {
   development: DEV_DATABASE_URL,

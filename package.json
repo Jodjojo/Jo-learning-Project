@@ -5,9 +5,9 @@
 	"main": "server.js",
 	"type": "module",
 	"scripts": {
-		"start": "node ./src/server",
+		"start": "babel-node ./src/server",
 		"build": "babel src --out-dir dist",
-		"db:migrate": "babel-node ./src/services/database/migration.js"
+		"db:migrate": "babel-node ./src/services/database/migration"
 	},
 	"repository": {
 		"type": "git",

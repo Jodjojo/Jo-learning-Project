@@ -12,8 +12,8 @@ exports.up = async function (knex) {
 	// Create Users table
 	await knex.schema.createTable("users", (table) => {
 		table.increments("id").primary();
-		table.string("firstName", 40);
-		table.string("lastName", 40);
+		table.string("firstname", 40);
+		table.string("lastname", 40);
 		table.string("email", 50).unique().notNullable();
 		table.string("password", 50).notNullable();
 		table.boolean("isActive").defaultTo(false);

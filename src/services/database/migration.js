@@ -1,4 +1,4 @@
-import { dbConnection } from "../../config";
+import { dbConnection } from "../../config/database.js";
 
 /**
  * Put all SQL here and

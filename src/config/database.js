@@ -7,12 +7,10 @@ const databaseConfig = {
   production: DATABASE_URL,
 };
 
-export const DATABASE_URL = databaseConfig[NODE_ENV];
-
 logger.info(`ENVIRONMENT:: ${NODE_ENV}`);
 
 const pool = new Pool({
-    connectionString: DATABASE_URL,
+    connectionString: databaseConfig[NODE_ENV],
 });
 
 pool.on('connect', () => {

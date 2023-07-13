@@ -1,10 +1,11 @@
 import express from "express";
 import { signup } from "../controllers/userController.js";
-import { login } from "../controllers/authController.js";
+import { login } from "../controllers/loginController.js";
+import { verifyToken } from "../jsonwebtoken.js";
 
 const router = express.Router();
 
 router.post("/signup", signup);
-router.get("login", login);
+router.post("/login", login);
 
 export default router;

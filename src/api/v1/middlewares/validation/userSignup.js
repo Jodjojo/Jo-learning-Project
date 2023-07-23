@@ -5,6 +5,18 @@
 // api/v1/validators/signupValidator.js
 // You'll need to implement the email uniqueness validation here
 
+export const checkEmailUnique = async (email) => {
+	const query = "SELECT * FROM users WHERE email = $1";
+	const values = [email];
+
+	try {
+		const result = await pool.query(query, values);
+		return result.rows.length === 0;
+	} catch (error) {
+		throw error;
+	}
+};
+
 export const validateSignup = async (req, res, next) => {
 	const { firstname, lastname, email, password } = req.body;
 

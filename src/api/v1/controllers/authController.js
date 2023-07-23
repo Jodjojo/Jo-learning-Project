@@ -5,9 +5,10 @@
  */
 
 import { validateSignup } from "../middlewares/validation/userSignup.js";
+import { createUser } from "../../../models/UserModel.js";
 
 export const userSignup = async (req, res) => {
-	validateSignup();
+	const { firstname, lastname, email, password } = req.body;
 
 	try {
 		// Create the user in the database

@@ -10,6 +10,6 @@ export const createUser = async (firstname, lastname, email, password) => {
 		const result = await pool.query(query, values);
 		return result.rows[0];
 	} catch (error) {
-		throw error;
+		return res.status(409).json({ error: "The email is already taken" });
 	}
 };

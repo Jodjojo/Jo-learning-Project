@@ -1,8 +1,18 @@
 import pg from "pg";
 import logger from "../utils/logger.js";
 import { DEV_DATABASE_URL, DATABASE_URL, NODE_ENV } from "./constants.js";
+import dotenv from "dotenv";
+dotenv.config();
+const pool = new pg.Pool({
+	// Your PostgreSQL database configuration options here
+	user: "postgres",
+	password: "Manutd12",
+	host: "127.0.0.1",
+	port: "5432",
+	database: "postgres",
+});
 
-const { Pool } = pg;
+export { pool };
 
 const databaseConfig = {
 	development: DEV_DATABASE_URL,
@@ -11,9 +21,9 @@ const databaseConfig = {
 
 logger.info(`ENVIRONMENT:: ${NODE_ENV}`);
 
-const pool = new Pool({
-	connectionString: databaseConfig[NODE_ENV],
-});
+// const pool = new Pool({
+// 	connectionString: databaseConfig[NODE_ENV],
+// });
 
 pool.on("connect", () => {
 	logger.info("CONNECTED TO DATABASE");
@@ -36,3 +46,5 @@ export const dbConnection = {
 		}
 	},
 };
+
+export default pool;

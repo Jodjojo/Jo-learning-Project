@@ -6,6 +6,8 @@
 // You'll need to implement the email uniqueness validation here
 import { pool } from "../../../../config/database.js";
 import Joi from "joi";
+import bcrypt from "bcrypt";
+
 export const checkEmailUnique = async (req, res, next) => {
 	const { email } = req.body;
 
@@ -36,11 +38,15 @@ export const validateSignup = async (req, res, next) => {
 
 	const { error } = schema.validate(req.body);
 
+	const { password } = req.body;
 	if (error) {
 		return res
 			.status(422)
 			.json({ error: `Please enter the ${error.details[0].context.key}` });
 	}
+
+	const hashedPassword = await bcrypt.hash(password, 10);
+	req.hashedPassword = hashedPassword;
 
 	next();
 };

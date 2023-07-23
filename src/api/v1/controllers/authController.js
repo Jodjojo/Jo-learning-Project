@@ -5,17 +5,19 @@
  */
 
 import { createUser } from "../../../models/UserModel.js";
+import { generateToken } from "../jsonwebtoken.js";
 
 export const userSignup = async (req, res) => {
-	const { firstname, lastname, email, password } = req.body;
+	const { firstname, lastname, email } = req.body;
+	const hashedPassword = req.hashedPassword;
 
 	try {
-		const user = await createUser(firstname, lastname, email, password);
+		const user = await createUser(firstname, lastname, email, hashedPassword);
+		const token = generateToken(user.id);
 
 		return res.status(200).json({
-			firstName: user.firstname,
-			lastName: user.lastname,
-			email: user.email,
+			user: user,
+			token,
 		});
 	} catch (error) {
 		console.error("Error during user signup:", error);

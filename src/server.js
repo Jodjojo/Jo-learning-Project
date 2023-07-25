@@ -1,5 +1,7 @@
 import express from "express";
+import router from './api/v1/routes/index.js';
 import bodyParser from "body-parser";
+
 const app = express();
 const port = 3000;
 
@@ -12,6 +14,7 @@ app.get("/", (req, res) => {
 });
 
 // API routes
+app.use("/api/v1/", router);
 
 app.listen(port, () => {
 	console.log(`Server is running on port ${port}...`);

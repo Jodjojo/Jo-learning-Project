@@ -5,6 +5,7 @@
  */
 
 import { createUser } from "../../../models/UserModel.js";
+import logger from "../../../utils/logger.js";
 
 export const userSignup = async (req, res) => {
 	const { firstname, lastname, email, password } = req.body;
@@ -18,7 +19,7 @@ export const userSignup = async (req, res) => {
 			email: user.email,
 		});
 	} catch (error) {
-		console.error("Error during user signup:", error);
+		logger.error(error);
 		return res.status(500).json({ error: "Internal server error" });
 	}
 };

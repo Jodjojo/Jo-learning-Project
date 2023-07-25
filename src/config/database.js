@@ -2,17 +2,8 @@ import pg from "pg";
 import logger from "../utils/logger.js";
 import { DEV_DATABASE_URL, DATABASE_URL, NODE_ENV } from "./constants.js";
 import dotenv from "dotenv";
-dotenv.config();
-const pool = new pg.Pool({
-	// Your PostgreSQL database configuration options here
-	user: "postgres",
-	password: "Manutd12",
-	host: "127.0.0.1",
-	port: "5432",
-	database: "postgres",
-});
 
-export { pool };
+dotenv.config();
 
 const databaseConfig = {
 	development: DEV_DATABASE_URL,
@@ -21,25 +12,25 @@ const databaseConfig = {
 
 logger.info(`ENVIRONMENT:: ${NODE_ENV}`);
 
-// const pool = new Pool({
-// 	connectionString: databaseConfig[NODE_ENV],
-// });
+const pool = new pg.Pool({
+	connectionString: databaseConfig[NODE_ENV],
+});
 
 pool.on("connect", () => {
 	logger.info("CONNECTED TO DATABASE");
 });
 
 pool.on("error", (err) => {
-	logger.error("ERROR:", err.stack);
+	logger.error("ERROR: " + err.stack);
 	process.exit(-1);
 });
 
 export const dbConnection = {
-	query: async (queryString) => {
+	query: async (queryString, queryParams) => {
 		const client = await pool.connect();
 		try {
-			const res = await client.query(queryString);
-			logger.info("DB RESPONSE:", res);
+			const res = await client.query(queryString, queryParams);
+			logger.info("DB QUERY SUCCESS");
 			return res;
 		} finally {
 			client.release();

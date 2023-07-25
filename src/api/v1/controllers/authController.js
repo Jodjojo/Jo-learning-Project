@@ -31,6 +31,7 @@ export const login = async (req, res) => {
 	console.log(email, password);
 	try {
 		const user = await loginUser(email, password);
+		console.log(user);
 
 		if (!user) {
 			return res.status(401).json({ error: "user not found" });

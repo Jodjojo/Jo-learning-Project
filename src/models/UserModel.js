@@ -28,18 +28,16 @@ export const loginUser = async (email, password) => {
 			throw new Error("User not found");
 		}
 
-		bcrypt.compare(user.password, password, function (err, res) {
-			if (password != user.password) {
-				res.json({ success: false, message: "passwords do not match", err });
-			} else {
-				// Send JWT
-				return {
-					firstName: user.first_name,
-					lastName: user.last_name,
-					email: user.email,
-				};
+		// check user password validity
+		bcrypt.compare(password, user.password).then(function (err, result) {
+			if (err) {
+				throw new Error(err);
+			} else if (result) {
+				winstonLogger.info(result);
 			}
 		});
+
+		return user; // Return the user after successful password validation
 	} catch (error) {
 		throw error;
 	}

@@ -5,6 +5,7 @@
  */
 
 import { createUser } from "../../../models/UserModel.js";
+import logger from "../../../utils/logger.js";
 import { generateToken } from "../jsonwebtoken.js";
 
 export const userSignup = async (req, res) => {
@@ -20,7 +21,7 @@ export const userSignup = async (req, res) => {
 			token,
 		});
 	} catch (error) {
-		console.error("Error during user signup:", error);
+		logger.error(error);
 		return res.status(500).json({ error: "Internal server error" });
 	}
 };

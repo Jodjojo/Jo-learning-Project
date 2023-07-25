@@ -1,9 +1,10 @@
 import express from "express";
+import router from './api/v1/routes/index.js';
 import bodyParser from "body-parser";
-import authRoutes from "./api/v1/routes/authRoute.js";
 
 const app = express();
 const port = 3000;
+
 // Middleware to prase JSON to request bodies
 app.use(bodyParser.json());
 
@@ -13,8 +14,7 @@ app.get("/", (req, res) => {
 });
 
 // API routes
-// Routes
-app.use("/api/v1", authRoutes);
+app.use("/api/v1/", router);
 
 app.listen(port, () => {
 	console.log(`Server is running on port ${port}...`);

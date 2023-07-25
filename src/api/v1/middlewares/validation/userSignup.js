@@ -7,7 +7,7 @@
 import { pool } from "../../../../config/database.js";
 import Joi from "joi";
 import bcrypt from "bcrypt";
-import logger from "../../../../utils/logger.js";
+import winstonLogger from "../../../../utils/logger.js";
 
 export const checkEmailUnique = async (req, res, next) => {
 	const { email } = req.body;
@@ -23,7 +23,7 @@ export const checkEmailUnique = async (req, res, next) => {
 
 		next();
 	} catch (error) {
-		logger("Error checking unique email:", error);
+		winstonLogger.info("Error checking unique email:", error);
 		return res.status(500).json({ error: "Internal server error" });
 	}
 };
@@ -63,11 +63,9 @@ export const validateLogin = async (req, res, next) => {
 	const { error } = schema.validate(req.body);
 
 	if (error) {
-		return res
-			.status(422)
-			.json({
-				error: `Please enter the ${error.details[0].context.key} of maximum character 50`,
-			});
+		return res.status(422).json({
+			error: `Please enter the ${error.details[0].context.key} of maximum character 50`,
+		});
 	}
 
 	next();

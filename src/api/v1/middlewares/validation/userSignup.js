@@ -50,3 +50,22 @@ export const validateSignup = async (req, res, next) => {
 
 	next();
 };
+
+// Validate login
+
+export const validateLogin = async (req, res, next) => {
+	const schema = Joi.object({
+		email: Joi.string().email().required(),
+		password: Joi.string().required(),
+	});
+
+	const { error } = schema.validate(req.body);
+
+	if (error) {
+		return res
+			.status(422)
+			.json({ error: `Please enter the ${error.details[0].context.key}` });
+	}
+
+	next();
+};

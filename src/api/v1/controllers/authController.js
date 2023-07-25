@@ -4,8 +4,8 @@
  * @param {*} res - response
  */
 
-import { createUser } from "../../../models/UserModel.js";
 import { generateToken } from "../jsonwebtoken.js";
+import { createUser, loginUser } from "../../../models/UserModel.js";
 
 export const userSignup = async (req, res) => {
 	const { firstname, lastname, email } = req.body;
@@ -21,6 +21,24 @@ export const userSignup = async (req, res) => {
 		});
 	} catch (error) {
 		console.error("Error during user signup:", error);
+		return res.status(500).json({ error: "Internal server error" });
+	}
+};
+
+export const login = async (req, res) => {
+	const { email, password } = req.body;
+
+	console.log(email, password);
+	try {
+		const user = await loginUser(email, password);
+
+		if (!user) {
+			return res.status(401).json({ error: "user not found" });
+		}
+
+		return res.status(200).json(user);
+	} catch (error) {
+		console.error("Error during login:", error.message);
 		return res.status(500).json({ error: "Internal server error" });
 	}
 };

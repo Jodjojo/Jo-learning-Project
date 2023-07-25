@@ -7,6 +7,7 @@
 import { pool } from "../../../../config/database.js";
 import Joi from "joi";
 import bcrypt from "bcrypt";
+import logger from "../../../../utils/logger.js";
 
 export const checkEmailUnique = async (req, res, next) => {
 	const { email } = req.body;
@@ -22,7 +23,7 @@ export const checkEmailUnique = async (req, res, next) => {
 
 		next();
 	} catch (error) {
-		console.error("Error checking unique email:", error);
+		logger("Error checking unique email:", error);
 		return res.status(500).json({ error: "Internal server error" });
 	}
 };
@@ -30,10 +31,10 @@ export const checkEmailUnique = async (req, res, next) => {
 export const validateSignup = async (req, res, next) => {
 	// Validate required fields
 	const schema = Joi.object({
-		firstname: Joi.string().required(),
-		lastname: Joi.string().required(),
-		email: Joi.string().email().required(),
-		password: Joi.string().required(),
+		firstname: Joi.string().required().max(40),
+		lastname: Joi.string().required().max(40),
+		email: Joi.string().email().required().max(50),
+		password: Joi.string().required().max(50),
 	});
 
 	const { error } = schema.validate(req.body);
@@ -42,7 +43,9 @@ export const validateSignup = async (req, res, next) => {
 	if (error) {
 		return res
 			.status(422)
-			.json({ error: `Please enter the ${error.details[0].context.key}` });
+			.json({
+				error: `Please enter the ${error.details[0].context.key} of maximum character 40`,
+			});
 	}
 
 	const hashedPassword = await bcrypt.hash(password, 10);

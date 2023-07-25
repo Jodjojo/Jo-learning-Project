@@ -1,6 +1,7 @@
 // api/v1/models/userModel.js
 import { pool } from "../config/database.js";
 import bcrypt from "bcrypt";
+import winstonLogger from "../utils/logger.js";
 
 export const createUser = async (firstname, lastname, email, password) => {
 	try {
@@ -21,7 +22,7 @@ export const loginUser = async (email, password) => {
 		const query = "SELECT * FROM users WHERE email = $1";
 		const result = await pool.query(query, [email]);
 		const user = result.rows[0];
-		// console.log(user);
+		winstonLogger.info(user);
 
 		if (!user) {
 			throw new Error("User not found");

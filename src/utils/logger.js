@@ -1,12 +1,10 @@
-import winston from 'winston';
-import { DEBUG } from '../config/constants.js';
+import winston from "winston";
+import { DEBUG } from "../config/constants.js";
 
 const winstonLogger = winston.createLogger({
-  level: 'info',
-  format: winston.format.json(),
-  transports: [
-    new winston.transports.Console(),
-  ]
+	level: "info",
+	format: winston.format.json(),
+	transports: [new winston.transports.Console()],
 });
 
 /**
@@ -14,22 +12,22 @@ const winstonLogger = winston.createLogger({
  * @exports
  */
 export default {
-  /**
-   * @param {*} data - the data to be logged
-   * @returns {void}
-   */
-  info(data) {
-    if (DEBUG === 'true') {
-      winstonLogger.info(data);
-    }
-  },
-  /**
-   * @param {*} data - the data to be logged
-   * @returns {void}
-   */
-  error(data) {
-    if (DEBUG === 'true') {
-      winstonLogger.info(data);
-    }
-  }
+	/**
+	 * @param {*} data - the data to be logged
+	 * @returns {void}
+	 */
+	info(data) {
+		if (DEBUG === "true") {
+			winstonLogger.info(data);
+		}
+	},
+	/**
+	 * @param {*} data - the data to be logged
+	 * @returns {void}
+	 */
+	error(data) {
+		if (DEBUG === "true") {
+			winstonLogger.info(data);
+		}
+	},
 };

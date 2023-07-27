@@ -28,9 +28,4 @@ export const validateSignup = async (req, res, next) => {
 			error: `Please enter the ${error.details[0].context.key} of maximum 40`,
 		});
 	}
-
-	const hashedPassword = await bcrypt.hash(password, 10);
-	req.hashedPassword = hashedPassword;
-
-	next();
 };

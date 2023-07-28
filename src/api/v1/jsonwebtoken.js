@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { SECRET_KEY } from "../../config/constants";
+import { SECRET_KEY } from "../../config/constants.js";
 
 export const generateToken = (userId) => {
 	const secretKey = SECRET_KEY;

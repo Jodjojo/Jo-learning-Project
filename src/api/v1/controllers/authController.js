@@ -7,8 +7,9 @@
 import { createUser } from "../../../models/UserModel.js";
 import logger from "../../../utils/logger.js";
 import { generateToken } from "../jsonwebtoken.js";
+import { errorHandler } from "../middlewares/validation/errorHandler.js";
 
-export const userSignup = async (req, res) => {
+export const userSignup = async (req, res, next) => {
 	const { firstname, lastname, email } = req.body;
 	const hashedPassword = req.hashedPassword;
 
@@ -21,7 +22,6 @@ export const userSignup = async (req, res) => {
 			token,
 		});
 	} catch (error) {
-		logger.error(error);
-		return res.status(500).json({ error: "Internal server error" });
+		next(errorHandler);
 	}
 };

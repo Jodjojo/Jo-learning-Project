@@ -7,8 +7,6 @@ export const createUser = async (firstname, lastname, email, password) => {
 		"INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4) RETURNING *";
 	const values = [firstname, lastname, email, hashedPassword];
 
-	next();
-
 	try {
 		const result = await dbConnection.query(query, values);
 		return result.rows[0];

@@ -3,7 +3,6 @@ import logger from "../utils/logger.js";
 
 export const createUser = async (firstname, lastname, email, password) => {
 	const hashedPassword = await bcrypt.hash(password, 10);
-	req.hashedPassword = hashedPassword;
 	const query =
 		"INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4) RETURNING *";
 	const values = [firstname, lastname, email, hashedPassword];
